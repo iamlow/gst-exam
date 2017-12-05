@@ -92,5 +92,5 @@ gst-inspect-1.0
     ```
 - mp4 file (audio + video) -> rtmpsink
     ```sh
-    gst-launch-1.0 filesrc location="/home/nvidia/video/486.mp4" ! qtdemux name=demux demux.video_0 ! queue ! flvmux streamable=true name=mux ! rtmpsink location="rtmp://a.rtmp.youtube.com/live2/[Key] live=true" -e demux.audio_0 ! queue ! mux.audio
+    gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! flvmux streamable=true name=mux ! rtmpsink location="rtmp://a.rtmp.youtube.com/live2/[Key] live=true" -e demux.audio_0 ! queue ! mux.audio
     ```
