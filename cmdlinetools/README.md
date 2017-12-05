@@ -77,7 +77,7 @@ gst-inspect-1.0
     ```sh
     sudo apt-get install  gstreamer1.0-plugins-bad
     ```
-    - 3 videos compositing(overlay)
+- 3 videos compositing(overlay)
     ```sh
     $ gst-launch-1.0 -e glvideomixer name=mix sink_0::xpos=0 sink_0::ypos=0 sink_1::xpos=0 sink_1::ypos=240 sink_2::xpos=1280 sink_2::ypos=240 ! autovideosink filesrc location="video1.mp4" ! qtdemux name=demux_0 demux_0.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw' ! tee ! queue ! mix.sink_0 filesrc location="video2.mp4" ! qtdemux name=demux_1 demux_1.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720' ! tee ! queue ! mix.sink_1 filesrc location="video3.mp4" ! qtdemux name=demux_2 demux_2.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=640, height=360' ! tee ! queue ! mix.sink_2 audiomixer name=amix ! audioconvert ! voaacenc ! mux.audio demux_1.audio_0 ! queue ! avdec_aac ! audioconvert ! amix.sink_0 demux_2.audio_0 ! queue ! avdec_aac ! audioconvert ! amix.sink_1 demux_0.audio_0 ! queue ! avdec_aac ! audioconvert ! amix.sink_2
     ```
