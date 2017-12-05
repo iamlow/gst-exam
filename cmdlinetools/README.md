@@ -46,7 +46,7 @@ gst-inspect-1.0
     ```sh
     gst-launch-1.0 -e videomixer name=mix sink_0::xpos=0 sink_0::ypos=0 sink_0::alpha=0 sink_1::xpos=100 sink_1::ypos=50 ! nveglglessink videotestsrc ! video/x-raw,width=600,height=200 ! mix.sink_0 videotestsrc pattern=0 ! video/x-raw,width=100,height=100 ! mix.sink_1
     ```
-    - 3 videos compositing(overlay)
+- 3 videos compositing(overlay)
     ```sh
     gst-launch-1.0 -e videomixer name=mix sink_0::xpos=0 sink_0::ypos=0 sink_1::xpos=50 sink_1::ypos=50 sink_2::xpos=200 sink_2::ypos=50 ! nveglglessink videotestsrc ! video/x-raw,width=1280,height=720 ! mix.sink_0 videotestsrc ! video/x-raw,width=100,height=100 ! mix.sink_1 videotestsrc ! video/x-raw,width=100,height=100 ! mix.sink_2
     ```
