@@ -40,22 +40,22 @@ gst-inspect-1.0
     ```
 ## Scale (H/W)
 - 해상도 변경
-```sh
-gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720' ! nveglglessink -e
-```
-```sh
-gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720, format=(string)NV12' ! nveglglessink -e
-```
-```sh
-gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720, format=(string)I420' ! nveglglessink -e
-```
-```sh
-gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720, format=(string)RGBA' ! nveglglessink -e
-```
+    ```sh
+    gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720' ! nveglglessink -e
+    ```
+    ```sh
+    gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720, format=(string)NV12' ! nveglglessink -e
+    ```
+    ```sh
+    gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720, format=(string)I420' ! nveglglessink -e
+    ```
+    ```sh
+    gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720, format=(string)RGBA' ! nveglglessink -e
+    ```
 - NVMM (CPU 점유율이 낮음)
-```sh
-gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw(memory:NVMM), width=1280, height=720' ! nveglglessink -e
-```
+    ```sh
+    gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw(memory:NVMM), width=1280, height=720' ! nveglglessink -e
+    ```
 ## Videomixer (S/W using CPU)
 - 2 videos compositing(overlay)
     ```sh
