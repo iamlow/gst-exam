@@ -1,6 +1,7 @@
 # GStreamer Command Line Tools Examples
 ## 테스트 환경
 - Jetson TX1/TX2
+- 영상: 1080p30f 3Mbps H.264 encoded video
 ## Reference
 - [Jetson TX1 Accelerated Gstreamer User Guide](http://developer2.download.nvidia.com/embedded/L4T/r28_Release_v1.0/Docs/Jetson_TX1_Accelerated_GStreamer_User_Guide.pdf)
 
@@ -29,7 +30,7 @@ gst-inspect-1.0
     gst-launch-1.0 filesrc location="video.mp4" ! decodebin ! autovideosink -e
     ```
 ## Transcoding
-- H.264 decode -> H.264 encode (비디오만 처리)
+- H.264 decode -> H.264 encode (video only, audio by pass)
     ```sh
     gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw(memory:NVMM), format=(string)I420' ! omxh264enc ! qtmux name=mux ! filesink location="video_out.mp4" demux.audio_0 ! queue ! aacparse ! mux.audio_0 -e
     ```
@@ -37,3 +38,16 @@ gst-inspect-1.0
     ```sh
     RAM 2350/3983MB (lfb 17x4MB) cpu [40%,45%,32%,42%]@1734 EMC 55%@1600 APE 25 NVDEC 716 MSENC 716 GR3D 0%@76
     ```
+## Videomixer (S/W using CPU)
+- 2 videos compositing(overlay)
+    ```sh
+    gst-launch-1.0 -v videotestsrc name=tstsrc0 is-live=true ! video/x-raw,width=1280,height=720,framerate=30/1 ! videomixer name=mix ! videoconvert ! nveglglessink sync=false videotestsrc name=tstsrc1 pattern=ball background-color=0 ! mix.
+    ```
+    ```sh
+    gst-launch-1.0 -e videomixer name=mix sink_0::xpos=0 sink_0::ypos=0 sink_0::alpha=0 sink_1::xpos=100 sink_1::ypos=50 ! nveglglessink videotestsrc ! video/x-raw,width=600,height=200 ! mix.sink_0 videotestsrc pattern=0 ! video/x-raw,width=100,height=100 ! mix.sink_1
+    ```
+    - 3 videos compositing(overlay)
+    ```sh
+    gst-launch-1.0 -e videomixer name=mix sink_0::xpos=0 sink_0::ypos=0 sink_1::xpos=50 sink_1::ypos=50 sink_2::xpos=200 sink_2::ypos=50 ! nveglglessink videotestsrc ! video/x-raw,width=1280,height=720 ! mix.sink_0 videotestsrc ! video/x-raw,width=100,height=100 ! mix.sink_1 videotestsrc ! video/x-raw,width=100,height=100 ! mix.sink_2
+    ```
+    > videomixer는 CPU를 사용하는 S/W 합성이라 TX1에서 사용불가 ㅠㅠ
