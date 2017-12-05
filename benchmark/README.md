@@ -38,9 +38,10 @@
     ```
 - 시나리오 테스트
     ```sh
-$ gst-launch-1.0 -e glvideomixer name=mix sink_0::xpos=0 sink_0::ypos=0 sink_1::xpos=0 sink_1::ypos=240 sink_2::xpos=1280 sink_2::ypos=240 ! omxh264enc ! h264parse ! flvmux streamable=true name=mux ! rtmpsink location="rtmp://a.rtmp.youtube.com/live2/[Key] live=true" filesrc location="video1.mp4" ! qtdemux name=demux_0 demux_0.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw' ! tee ! queue ! mix.sink_0 filesrc location="video2.mp4" ! qtdemux name=demux_1 demux_1.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720' ! tee ! queue ! mix.sink_1 filesrc location="video3.mp4" ! qtdemux name=demux_2 demux_2.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=640, height=360' ! tee ! queue ! mix.sink_2 audiomixer name=amix ! audioconvert ! voaacenc ! mux.audio demux_1.audio_0 ! queue ! avdec_aac ! audioconvert ! amix.sink_0 demux_2.audio_0 ! queue ! avdec_aac ! audioconvert ! amix.sink_1 demux_0.audio_0 ! queue ! avdec_aac ! audioconvert ! amix.sink_2
+    $ gst-launch-1.0 -e glvideomixer name=mix sink_0::xpos=0 sink_0::ypos=0 sink_1::xpos=0 sink_1::ypos=240 sink_2::xpos=1280 sink_2::ypos=240 ! omxh264enc ! h264parse ! flvmux streamable=true name=mux ! rtmpsink location="rtmp://a.rtmp.youtube.com/live2/[Key] live=true" filesrc location="video1.mp4" ! qtdemux name=demux_0 demux_0.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw' ! tee ! queue ! mix.sink_0 filesrc location="video2.mp4" ! qtdemux name=demux_1 demux_1.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720' ! tee ! queue ! mix.sink_1 filesrc location="video3.mp4" ! qtdemux name=demux_2 demux_2.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=640, height=360' ! tee ! queue ! mix.sink_2 audiomixer name=amix ! audioconvert ! voaacenc ! mux.audio demux_1.audio_0 ! queue ! avdec_aac ! audioconvert ! amix.sink_0 demux_2.audio_0 ! queue ! avdec_aac ! audioconvert ! amix.sink_1 demux_0.audio_0 ! queue ! avdec_aac ! audioconvert ! amix.sink_2
     ```
 ## 테스트 결과
+- Jetson TX1
 ```sh
 RAM 1983/3983MB (lfb 80x4MB) cpu [39%,40%,41%,20%]@1734 EMC 30%@1600 APE 25 NVDEC 716 MSENC 716 GR3D 80%@153
 RAM 1982/3983MB (lfb 80x4MB) cpu [24%,19%,68%,27%]@1428 EMC 31%@1600 APE 25 NVDEC 716 MSENC 716 GR3D 53%@153
