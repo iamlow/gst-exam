@@ -24,3 +24,7 @@ gst-inspect-1.0
     gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvoverlaysink -e
     ```
     > sink: nvoverlaysink OpenMAX IL videosink element -> GPU 0%
+- 자동으로 sink 알맞게 설정
+    ```sh
+    gst-launch-1.0 filesrc location="video.mp4" ! decodebin ! autovideosink -e
+    ```
