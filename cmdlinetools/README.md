@@ -38,6 +38,24 @@ gst-inspect-1.0
     ```sh
     RAM 2350/3983MB (lfb 17x4MB) cpu [40%,45%,32%,42%]@1734 EMC 55%@1600 APE 25 NVDEC 716 MSENC 716 GR3D 0%@76
     ```
+## Scale (H/W)
+- 해상도 변경
+```sh
+gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720' ! nveglglessink -e
+```
+```sh
+gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720, format=(string)NV12' ! nveglglessink -e
+```
+```sh
+gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720, format=(string)I420' ! nveglglessink -e
+```
+```sh
+gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720, format=(string)RGBA' ! nveglglessink -e
+```
+- NVMM (CPU 점유율이 낮음)
+```sh
+gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw(memory:NVMM), width=1280, height=720' ! nveglglessink -e
+```
 ## Videomixer (S/W using CPU)
 - 2 videos compositing(overlay)
     ```sh
@@ -50,4 +68,8 @@ gst-inspect-1.0
     ```sh
     gst-launch-1.0 -e videomixer name=mix sink_0::xpos=0 sink_0::ypos=0 sink_1::xpos=50 sink_1::ypos=50 sink_2::xpos=200 sink_2::ypos=50 ! nveglglessink videotestsrc ! video/x-raw,width=1280,height=720 ! mix.sink_0 videotestsrc ! video/x-raw,width=100,height=100 ! mix.sink_1 videotestsrc ! video/x-raw,width=100,height=100 ! mix.sink_2
     ```
-    > videomixer는 CPU를 사용하는 S/W 합성이라 TX1에서 사용불가 ㅠㅠ
+    > videomixer는 CPU를 사용하는 S/W 합성이라 TX1에서 성능이슈 발생
+    > CPU 100% 소모하며 초딩 30f 영상합성 불가
+    > GPU를 사용하는 glvideomixer를 사용해야 처리 가능
+
+## glvideomixer (using GPU)
