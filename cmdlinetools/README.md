@@ -83,6 +83,14 @@ gst-inspect-1.0
     ```
 ## rtmpsink
 - gstreamer1.0-plugins-bad 필요
-```sh
-sudo apt-get install  gstreamer1.0-plugins-bad
-```
+    ```sh
+    sudo apt-get install  gstreamer1.0-plugins-bad
+    ```
+- videotestsrc + audiotestsrc -> rtmpsink
+    ```sh
+    gst-launch-1.0 videotestsrc do-timestamp=true is-live=true ! "video/x-raw,width=640,height=360,framerate=15/1" ! queue ! autovideoconvert ! omxh264enc ! h264parse ! queue ! mux. audiotestsrc is-live=true ! "audio/x-raw, format=S16LE, endianness=1234, signed=true, width=16, depth=16, rate=44100,channels=2" ! queue ! voaacenc bitrate=128000 ! aacparse ! audio/mpeg,mpegversion=4,stream-format=raw ! queue ! flvmux streamable=true name=mux ! queue ! rtmpsink location="rtmp://a.rtmp.youtube.com/live2/[Key] live=true"
+    ```
+- mp4 file (audio + video) -> rtmpsink
+    ```sh
+    gst-launch-1.0 filesrc location="/home/nvidia/video/486.mp4" ! qtdemux name=demux demux.video_0 ! queue ! flvmux streamable=true name=mux ! rtmpsink location="rtmp://a.rtmp.youtube.com/live2/[Key] live=true" -e demux.audio_0 ! queue ! mux.audio
+    ```
