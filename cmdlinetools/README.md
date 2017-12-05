@@ -9,7 +9,7 @@
 ```sh
 gst-inspect-1.0
 ```
-## Play (모니터 출력/비디오만 처리)
+## play (모니터 출력/비디오만 처리)
 - 파일읽기 -> 디먹싱 -> 파싱 -> 디코더 -> 비디오 렌터링(GPU)
     ```sh
     gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nveglglessink -e
@@ -29,7 +29,7 @@ gst-inspect-1.0
     ```sh
     gst-launch-1.0 filesrc location="video.mp4" ! decodebin ! autovideosink -e
     ```
-## Transcoding
+## transcoding
 - H.264 decode -> H.264 encode (video only, audio by pass)
     ```sh
     gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw(memory:NVMM), format=(string)I420' ! omxh264enc ! qtmux name=mux ! filesink location="video_out.mp4" demux.audio_0 ! queue ! aacparse ! mux.audio_0 -e
@@ -38,7 +38,7 @@ gst-inspect-1.0
     ```sh
     RAM 2350/3983MB (lfb 17x4MB) cpu [40%,45%,32%,42%]@1734 EMC 55%@1600 APE 25 NVDEC 716 MSENC 716 GR3D 0%@76
     ```
-## Scale (H/W)
+## scale (H/W)
 - 해상도 변경
     ```sh
     gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw, width=1280, height=720' ! nveglglessink -e
@@ -56,7 +56,7 @@ gst-inspect-1.0
     ```sh
     gst-launch-1.0 filesrc location="video.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! omxh264dec ! nvvidconv ! 'video/x-raw(memory:NVMM), width=1280, height=720' ! nveglglessink -e
     ```
-## Videomixer (S/W using CPU)
+## videomixer (S/W using CPU)
 - 2 videos compositing(overlay)
     ```sh
     gst-launch-1.0 -v videotestsrc name=tstsrc0 is-live=true ! video/x-raw,width=1280,height=720,framerate=30/1 ! videomixer name=mix ! videoconvert ! nveglglessink sync=false videotestsrc name=tstsrc1 pattern=ball background-color=0 ! mix.
