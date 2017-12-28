@@ -22,3 +22,15 @@ target_compile_options(basic-tutorial-2 PUBLIC ${GST_CFLAGS} ${GST_CFLAGS_OTHER}
 add_executable(basic-tutorial-3 basic-tutorial-3.c)
 target_link_libraries(basic-tutorial-3 ${GST_LIBRARIES})
 target_compile_options(basic-tutorial-3 PUBLIC ${GST_CFLAGS} ${GST_CFLAGS_OTHER})
+
+add_executable(basic-tutorial-4 basic-tutorial-4.c)
+target_link_libraries(basic-tutorial-4 ${GST_LIBRARIES})
+target_compile_options(basic-tutorial-4 PUBLIC ${GST_CFLAGS} ${GST_CFLAGS_OTHER})
+
+add_executable(basic-tutorial-6 basic-tutorial-6.c)
+target_link_libraries(basic-tutorial-6 ${GST_LIBRARIES})
+target_compile_options(basic-tutorial-6 PUBLIC ${GST_CFLAGS} ${GST_CFLAGS_OTHER})
+
+add_executable(basic-tutorial-7 basic-tutorial-7.c)
+target_link_libraries(basic-tutorial-7 ${GST_LIBRARIES})
+target_compile_options(basic-tutorial-7 PUBLIC ${GST_CFLAGS} ${GST_CFLAGS_OTHER})
