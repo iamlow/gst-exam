@@ -9,7 +9,7 @@ pkg_search_module(GST REQUIRED gstreamer-1.0)
 pkg_search_module(GSTAUDIO REQUIRED gstreamer-audio-1.0)
 pkg_search_module(GSTPBUTILS REQUIRED gstreamer-pbutils-1.0)
 
-include_directories(${GST_INCLUDE_DIRS})
+include_directories(${GST_INCLUDE_DIRS} ${GSTAUDIO_INCLUDE_DIRS} ${GSTPBUTILS_INCLUDE_DIRS})
 # add_definitions(-D__STDC_CONSTANT_MACROS)
 link_directories(${GST_LIBRARY_DIRS})
 
