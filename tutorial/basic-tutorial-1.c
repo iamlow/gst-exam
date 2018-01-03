@@ -28,7 +28,7 @@ int main(int argc, char const *argv[]) {
 #if 0   // XXX: FATAL on MacOS
     msg = gst_bus_timed_pop_filtered(bus,
             GST_CLOCK_TIME_NONE, GST_MESSAGE_ERROR | GST_MESSAGE_EOS);
-    msg = gst_bus_pop(bus);
+    // msg = gst_bus_pop(bus);
 #else   // GOOD on MacOS
     GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
     g_main_loop_run(main_loop);
