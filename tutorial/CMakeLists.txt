@@ -9,9 +9,11 @@ pkg_search_module(GST REQUIRED gstreamer-1.0)
 pkg_search_module(GSTAUDIO REQUIRED gstreamer-audio-1.0)
 pkg_search_module(GSTPBUTILS REQUIRED gstreamer-pbutils-1.0)
 
-include_directories(${GST_INCLUDE_DIRS} ${GSTAUDIO_INCLUDE_DIRS} ${GSTPBUTILS_INCLUDE_DIRS})
+include_directories(${GST_INCLUDE_DIRS}
+        ${GSTAUDIO_INCLUDE_DIRS} ${GSTPBUTILS_INCLUDE_DIRS})
 # add_definitions(-D__STDC_CONSTANT_MACROS)
-link_directories(${GST_LIBRARY_DIRS})
+link_directories(${GST_LIBRARY_DIRS}
+        ${GSTAUDIO_LIBRARY_DIRS} ${GSTPBUTILS_LIBRARY_DIRS})
 
 add_executable(basic-tutorial-1 basic-tutorial-1.c)
 target_link_libraries(basic-tutorial-1 ${GST_LIBRARIES})
@@ -44,3 +46,7 @@ target_compile_options(basic-tutorial-8 PUBLIC ${GST_CFLAGS} ${GST_CFLAGS_OTHER}
 add_executable(basic-tutorial-9 basic-tutorial-9.c)
 target_link_libraries(basic-tutorial-9 ${GST_LIBRARIES} ${GSTPBUTILS_LIBRARIES})
 target_compile_options(basic-tutorial-9 PUBLIC ${GST_CFLAGS} ${GST_CFLAGS_OTHER})
+
+add_executable(basic-tutorial-12 basic-tutorial-12.c)
+target_link_libraries(basic-tutorial-12 ${GST_LIBRARIES})
+target_compile_options(basic-tutorial-12 PUBLIC ${GST_CFLAGS} ${GST_CFLAGS_OTHER})
