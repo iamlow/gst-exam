@@ -50,3 +50,7 @@ target_compile_options(basic-tutorial-9 PUBLIC ${GST_CFLAGS} ${GST_CFLAGS_OTHER}
 add_executable(basic-tutorial-12 basic-tutorial-12.c)
 target_link_libraries(basic-tutorial-12 ${GST_LIBRARIES})
 target_compile_options(basic-tutorial-12 PUBLIC ${GST_CFLAGS} ${GST_CFLAGS_OTHER})
+
+add_executable(basic-tutorial-13 basic-tutorial-13.c)
+target_link_libraries(basic-tutorial-13 ${GST_LIBRARIES})
+target_compile_options(basic-tutorial-13 PUBLIC ${GST_CFLAGS} ${GST_CFLAGS_OTHER})

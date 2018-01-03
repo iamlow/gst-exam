@@ -18,6 +18,9 @@ static void cb_message(GstBus *bus, GstMessage *msg, CustomData *data) {
             g_print("Error: %s\n", err->message);
             g_error_free(err);
             g_free(debug);
+
+            gst_element_set_state(data->pipeline, GST_STATE_READY);
+            g_main_loop_quit(data->loop);
             break;
         }
         case GST_MESSAGE_EOS:
