@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 14)
 
 find_package(PkgConfig REQUIRED)
 pkg_search_module(GST REQUIRED gstreamer-1.0)
+pkg_search_module(GSTAUDIO REQUIRED gstreamer-audio-1.0)
+pkg_search_module(GSTPBUTILS REQUIRED gstreamer-pbutils-1.0)
 
 include_directories(${GST_INCLUDE_DIRS})
 # add_definitions(-D__STDC_CONSTANT_MACROS)
@@ -36,5 +38,9 @@ target_link_libraries(basic-tutorial-7 ${GST_LIBRARIES})
 target_compile_options(basic-tutorial-7 PUBLIC ${GST_CFLAGS} ${GST_CFLAGS_OTHER})
 
 add_executable(basic-tutorial-8 basic-tutorial-8.c)
-target_link_libraries(basic-tutorial-8 ${GST_LIBRARIES})
+target_link_libraries(basic-tutorial-8 ${GST_LIBRARIES} ${GSTAUDIO_LIBRARIES})
 target_compile_options(basic-tutorial-8 PUBLIC ${GST_CFLAGS} ${GST_CFLAGS_OTHER})
+
+add_executable(basic-tutorial-9 basic-tutorial-9.c)
+target_link_libraries(basic-tutorial-9 ${GST_LIBRARIES} ${GSTPBUTILS_LIBRARIES})
+target_compile_options(basic-tutorial-9 PUBLIC ${GST_CFLAGS} ${GST_CFLAGS_OTHER})
