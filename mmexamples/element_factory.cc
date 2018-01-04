@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     // Get list of all primary sinks in the system
     std::cout << "List of primary sinks: " << '\n';
     for (auto factory : Gst::ElementFactory::get_elements(
-            Gst::ELEMENT_FACTORY_TYPE_SINK, Gst::RANK_PRIMARY)) {
+            Gst::ELEMENT_FACTORY_TYPE_SINK, Gst::RANK_NONE)) {
         std::cout << " * " << factory->get_name() << '\n';
     }
     std::cout << '\n';
