@@ -16,6 +16,15 @@ int main(int argc, char *argv[]) {
     }
     std::cout << '\n';
 
+    // Get list of all primary sinks in the system
+    std::cout << "List of primary sinks: " << '\n';
+    for (auto factory : Gst::ElementFactory::get_elements(
+            Gst::ELEMENT_FACTORY_TYPE_SINK, Gst::RANK_PRIMARY)) {
+        std::cout << " * " << factory->get_name() << '\n';
+    }
+    std::cout << '\n';
+
+
     auto fakesrc_factory = Gst::ElementFactory::find("fakesrc");
     if (!fakesrc_factory) {
         std::cerr << "Failed to find factory of type 'fakesrc'" << '\n';
