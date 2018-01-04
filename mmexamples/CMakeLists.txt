@@ -20,3 +20,19 @@ target_compile_options(hello_world PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
 add_executable(bin bin.cc)
 target_link_libraries(bin ${GSTMM_LIBRARIES})
 target_compile_options(bin PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
+
+add_executable(bus bus.cc)
+target_link_libraries(bus ${GSTMM_LIBRARIES})
+target_compile_options(bus PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
+
+add_executable(dynamic_pads dynamic_pads.cc)
+target_link_libraries(dynamic_pads ${GSTMM_LIBRARIES})
+target_compile_options(dynamic_pads PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
+
+add_executable(element_factory element_factory.cc)
+target_link_libraries(element_factory ${GSTMM_LIBRARIES})
+target_compile_options(element_factory PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
+
+add_executable(init_gstreamermm init_gstreamermm.cc)
+target_link_libraries(init_gstreamermm ${GSTMM_LIBRARIES})
+target_compile_options(init_gstreamermm PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
