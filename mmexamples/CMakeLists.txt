@@ -36,3 +36,15 @@ target_compile_options(element_factory PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTH
 add_executable(init_gstreamermm init_gstreamermm.cc)
 target_link_libraries(init_gstreamermm ${GSTMM_LIBRARIES})
 target_compile_options(init_gstreamermm PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
+
+add_executable(all_media_player all_media_player.cc)
+target_link_libraries(all_media_player ${GSTMM_LIBRARIES})
+target_compile_options(all_media_player PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
+
+add_executable(audio_video_muxer audio_video_muxer.cc)
+target_link_libraries(audio_video_muxer ${GSTMM_LIBRARIES})
+target_compile_options(audio_video_muxer PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
+
+add_executable(dynamic_changing_element dynamic_changing_element.cc)
+target_link_libraries(dynamic_changing_element ${GSTMM_LIBRARIES})
+target_compile_options(dynamic_changing_element PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
