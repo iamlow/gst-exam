@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
     pipeline = Pipeline::create("effects-pipeline");
 
     auto src = ElementFactory::create_element("videotestsrc");
-    auto sink = ElementFactory::create_element("xvimagesink");
+    auto sink = ElementFactory::create_element("autovideosink");
 
     conv_before = ElementFactory::create_element("videoconvert");
     curr_effect = ElementFactory::create_element(effects[curr_position++]);

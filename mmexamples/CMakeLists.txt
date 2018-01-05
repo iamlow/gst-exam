@@ -48,3 +48,19 @@ target_compile_options(audio_video_muxer PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_O
 add_executable(dynamic_changing_element dynamic_changing_element.cc)
 target_link_libraries(dynamic_changing_element ${GSTMM_LIBRARIES})
 target_compile_options(dynamic_changing_element PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
+
+add_executable(dynamic_changing_source dynamic_changing_source.cc)
+target_link_libraries(dynamic_changing_source ${GSTMM_LIBRARIES})
+target_compile_options(dynamic_changing_source PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
+
+add_executable(element_link element_link.cc)
+target_link_libraries(element_link ${GSTMM_LIBRARIES})
+target_compile_options(element_link PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
+
+add_executable(tee_request_pad tee_request_pad.cc)
+target_link_libraries(tee_request_pad ${GSTMM_LIBRARIES})
+target_compile_options(tee_request_pad PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
+
+add_executable(typefind typefind.cc)
+target_link_libraries(typefind ${GSTMM_LIBRARIES})
+target_compile_options(typefind PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
