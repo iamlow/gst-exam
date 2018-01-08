@@ -64,3 +64,7 @@ target_compile_options(tee_request_pad PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTH
 add_executable(typefind typefind.cc)
 target_link_libraries(typefind ${GSTMM_LIBRARIES})
 target_compile_options(typefind PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
+
+add_executable(nvcam_rtmp nvcam_rtmp.cc)
+target_link_libraries(nvcam_rtmp ${GSTMM_LIBRARIES})
+target_compile_options(nvcam_rtmp PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
