@@ -65,7 +65,7 @@ class NvcamRtmpBin {
 
     void init() {
         // source = Gst::ElementFactory::create_element("wrappercamerabinsrc");
-        source = Gst::ElementFactory::create_element("nvcamerasrc");
+        source = Gst::ElementFactory::create_element("wrappercamerabinsrc");
         videoconvert = Gst::ElementFactory::create_element("videoconvert");
         sink = Gst::ElementFactory::create_element("autovideosink");
         if (!sink || !source || !videoconvert) {
@@ -73,8 +73,9 @@ class NvcamRtmpBin {
         }
 
         // sink->property_caps() = Gst::Caps::create_from_string("video/x-raw,format=RGB,pixel-aspect-ratio=1/1");
-        Glib::RefPtr<Gst::Caps> caps = Gst::Caps::create_simple("video/x-raw(memory:NVMM)",
-                "width", 1920, "height", 1080, "framerate", Gst::Fraction(30, 1));
+        Glib::RefPtr<Gst::Caps> caps = Gst::Caps::create_simple("video/x-raw",
+                "format", "GRAY8");
+                // "width", 1920, "height", 1080, "framerate", Gst::Fraction(30, 1));
         // capsfilter->set_property("caps", caps);
         pipeline->add(source)->add(videoconvert)->add(sink);
         // sink->signal_pad_added().connect(
