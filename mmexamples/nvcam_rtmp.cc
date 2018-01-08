@@ -6,6 +6,8 @@ class NvcamRtmpBin {
     Glib::RefPtr<Glib::MainLoop> main_loop;
     Glib::RefPtr<Gst::Pipeline> pipeline;
     Glib::RefPtr<Gst::Element> source;
+    Glib::RefPtr<Gst::Element> videoconvert;
+       // Glib::RefPtr<Gst::Caps> caps;
     Glib::RefPtr<Gst::Element> sink;
 
     bool on_bus_message(const Glib::RefPtr<Gst::Bus>&, const Glib::RefPtr<Gst::Message>& message) {
@@ -62,16 +64,22 @@ class NvcamRtmpBin {
     // }
 
     void init() {
-        source = Gst::ElementFactory::create_element("wrappercamerabinsrc");
+        // source = Gst::ElementFactory::create_element("wrappercamerabinsrc");
+        source = Gst::ElementFactory::create_element("nvcamerasrc");
+        videoconvert = Gst::ElementFactory::create_element("videoconvert");
         sink = Gst::ElementFactory::create_element("autovideosink");
-        if (!sink || !source) {
+        if (!sink || !source || !videoconvert) {
             throw std::runtime_error("One element could not be created.");
         }
 
-        pipeline->add(source)->add(sink);
+        // sink->property_caps() = Gst::Caps::create_from_string("video/x-raw,format=RGB,pixel-aspect-ratio=1/1");
+        Glib::RefPtr<Gst::Caps> caps = Gst::Caps::create_simple("video/x-raw(memory:NVMM)",
+                "width", 1920, "height", 1080, "framerate", Gst::Fraction(30, 1));
+        // capsfilter->set_property("caps", caps);
+        pipeline->add(source)->add(videoconvert)->add(sink);
         // sink->signal_pad_added().connect(
         //         sigc::mem_fun(*this, &AllMediaPlayer::on_sink_pad_added));
-        source->link(sink);
+        source->link(videoconvert, caps)->link(sink);
     }
 
 public:
