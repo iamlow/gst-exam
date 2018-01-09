@@ -7,6 +7,8 @@ class NvcamRtmpBin {
     Glib::RefPtr<Gst::Pipeline> pipeline;
     Glib::RefPtr<Gst::Element> source;
     Glib::RefPtr<Gst::Element> videoconvert;
+    Glib::RefPtr<Gst::Element> encoder;
+    Glib::RefPtr<Gst::Element> muxer;
        // Glib::RefPtr<Gst::Caps> caps;
     Glib::RefPtr<Gst::Element> sink;
 
@@ -66,12 +68,20 @@ class NvcamRtmpBin {
     void init() {
         source = Gst::ElementFactory::create_element("nvcamerasrc");
         videoconvert = Gst::ElementFactory::create_element("videoconvert");
-        sink = Gst::ElementFactory::create_element("autovideosink");
+        encoder = Gst::ElementFactory::create_element("omxh264enc");
+        muxer = Gst::ElementFactory::create_element("flvmux");
+        sink = Gst::ElementFactory::create_element("rtmpsink");
         if (!sink || !source || !videoconvert) {
             throw std::runtime_error("One element could not be created.");
         }
 
-        source->set_property<Glib::ustring>("fpsRange", "30 30");
+        source->set_property<Glib::ustring>("fpsRange", "30.0 30.0");
+        encoder->set_property("iframeinterval", 30);
+        encoder->set_property("insert-sps-pps", true);
+        muxer->set_property("streamable", true);
+        sink->set_property("sync", false);
+        sink->set_property<Glib::ustring>("location", "rtmp://localhost/live/stream");
+        
         // XXX Gst::Caps::create_simple is maybe an invalid function
         // Reference: https://devtalk.nvidia.com/default/topic/934515/using-x-raw-memory-nvmm-in-gstreamer-program/
 #if 0
@@ -81,10 +91,11 @@ class NvcamRtmpBin {
         Glib::RefPtr<Gst::Caps> caps = Gst::Caps::create_from_string(
                 "video/x-raw(memory:NVMM), width=(int)1920, height=(int)1080, framerate=(fraction)30/1");
 #endif
-        pipeline->add(source)->add(videoconvert)->add(sink);
+        pipeline->add(source)->add(videoconvert)
+                ->add(encoder)->add(muxer)->add(sink);
         // sink->signal_pad_added().connect(
         //         sigc::mem_fun(*this, &AllMediaPlayer::on_sink_pad_added));
-        source->link(videoconvert, caps)->link(sink);
+        source->link(videoconvert, caps)->link(encoder)->link(muxer)->link(sink);
     }
 
 public:
