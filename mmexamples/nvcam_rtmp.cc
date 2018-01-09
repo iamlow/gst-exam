@@ -64,19 +64,23 @@ class NvcamRtmpBin {
     // }
 
     void init() {
-        // source = Gst::ElementFactory::create_element("wrappercamerabinsrc");
-        source = Gst::ElementFactory::create_element("wrappercamerabinsrc");
+        source = Gst::ElementFactory::create_element("nvcamerasrc");
         videoconvert = Gst::ElementFactory::create_element("videoconvert");
         sink = Gst::ElementFactory::create_element("autovideosink");
         if (!sink || !source || !videoconvert) {
             throw std::runtime_error("One element could not be created.");
         }
 
-        // sink->property_caps() = Gst::Caps::create_from_string("video/x-raw,format=RGB,pixel-aspect-ratio=1/1");
-        Glib::RefPtr<Gst::Caps> caps = Gst::Caps::create_simple("video/x-raw",
-                "format", "GRAY8");
-                // "width", 1920, "height", 1080, "framerate", Gst::Fraction(30, 1));
-        // capsfilter->set_property("caps", caps);
+        source->set_property<Glib::ustring>("fpsRange", "30 30");
+        // XXX Gst::Caps::create_simple is maybe an invalid function
+        // Reference: https://devtalk.nvidia.com/default/topic/934515/using-x-raw-memory-nvmm-in-gstreamer-program/
+#if 0
+        Glib::RefPtr<Gst::Caps> caps = Gst::Caps::create_simple("video/x-raw(memory:NVMM)",
+                "width", 1920, "height", 1080, "framerate", Gst::Fraction(30, 1));
+#else
+        Glib::RefPtr<Gst::Caps> caps = Gst::Caps::create_from_string(
+                "video/x-raw(memory:NVMM), width=(int)1920, height=(int)1080, framerate=(fraction)30/1");
+#endif
         pipeline->add(source)->add(videoconvert)->add(sink);
         // sink->signal_pad_added().connect(
         //         sigc::mem_fun(*this, &AllMediaPlayer::on_sink_pad_added));
