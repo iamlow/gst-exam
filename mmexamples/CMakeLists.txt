@@ -68,3 +68,7 @@ target_compile_options(typefind PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
 add_executable(nvcam_rtmp nvcam_rtmp.cc)
 target_link_libraries(nvcam_rtmp ${GSTMM_LIBRARIES})
 target_compile_options(nvcam_rtmp PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
+
+add_executable(videotestsrc_videomixer_videosink videotestsrc_videomixer_videosink.cc)
+target_link_libraries(videotestsrc_videomixer_videosink ${GSTMM_LIBRARIES})
+target_compile_options(videotestsrc_videomixer_videosink PUBLIC ${GSTMM_CFLAGS} ${GSTMM_CFLAGS_OTHER})
